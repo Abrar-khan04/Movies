@@ -112,3 +112,10 @@ export const getSimilarMovies = async (movieId) => {
     return data.results;
 };
 
+export const discoverMovies = async (page = 1) => {
+    const response = await fetch(
+        `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=primary_release_date.desc&page=${page}&vote_count.gte=50`
+    );
+    const data = await response.json();
+    return data.results;
+};

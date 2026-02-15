@@ -1,16 +1,62 @@
-# React + Vite
+# 🎬 Streamlio - Movie Streaming & AI Recommendations
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Streamlio is a modern movie streaming website built with React and Tailwind CSS. It features dynamic movie details, real-time search, and an AI-powered chatbot that gives personalized movie recommendations based on your mood.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- **Dynamic Movie Details**: View comprehensive information about movies, including trailers, ratings, and similar movie suggestions.
+- **Real-time Search**: Instant search functionality to find your favorite movies or TV shows.
+- **🤖 Streamlio AI Chatbot**: Built with Google Gemini AI (`gemini-2.5-flash`), this chatbot acts as your movie buddy to help you find the perfect film.
+- **Responsive Design**: Fully responsive UI designed for a premium viewing experience across all devices.
+- **YouTube Integration**: Official trailers embedded directly in the movie details page.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend**: React.js, Tailwind CSS, Vite
+- **Routing**: React Router Dom
+- **APIs**: 
+  - [TMDB API](https://www.themoviedb.org/documentation/api) (Movie Data & Media)
+  - [Google Gemini API](https://ai.google.dev/) (AI Recommendations)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Getting Started
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/Streamlio.git
+cd Streamlio
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Environment Variables
+Create a `.env` file in the root directory and add your API keys:
+```env
+VITE_TMDB_API_KEY=your_tmdb_api_key
+VITE_GEMINI_API_KEY=your_gemini_api_key
+```
+
+### 4. Run the Development Server
+```bash
+npm run dev
+```
+
+---
+
+## 📸 Screenshots
+
+*(Add your screenshots here after deploying!)*
+
+---
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+**Happy Streaming! 🍿**

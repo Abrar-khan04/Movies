@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { searchMovies, getImageUrl } from "../services/tmds";
 import Logo from "../assets/play.png";
 
 const navigation = [
-
     { name: "Home", href: '/' },
     { name: "Movies", href: '/movies' },
     { name: "TV Shows", href: '/tv-shows' },
@@ -46,16 +45,20 @@ function Header() {
             <nav aria-label="global" className="flex items-center justify-between p-6 lg:px-8">
                 {/*Logo*/}
                 <div className="flex lg:flex-1">
-                    <a href="/" className="-m-2 p-2">
+                    <Link to="/" className="-m-2 p-2">
                         <span className="sr-only">Streamlio</span>
                         <img src={Logo} alt="Streamlio Logo" className="h-10 w-auto" />
-                    </a>
+                    </Link>
                 </div>
                 <div className="flex gap-x-12">
                     {navigation.map((item) => (
-                        <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-white rounded-lg transition-all duration-300 hover:text-cyan-600 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.9)]">
+                        <Link
+                            key={item.name}
+                            to={item.href}
+                            className="text-sm/6 font-semibold text-white rounded-lg transition-all duration-300 hover:text-cyan-600 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.9)]"
+                        >
                             {item.name}
-                        </a>
+                        </Link>
                     ))}
                 </div>
 
