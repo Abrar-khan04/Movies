@@ -82,7 +82,7 @@ function Hero() {
                             className="absolute inset-0 w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent pointer-events-none" />
-                        <div className="absolute inset-0 flex items-center px-12 lg:px-24 relative z-10">
+                        <div className="absolute inset-0 flex items-center px-12 lg:px-24 z-10">
                             <div className="max-w-2xl">
                                 <h1 className="text-5xl lg:text-7xl font-bold text-white mb-4">
                                     {movie.title}
