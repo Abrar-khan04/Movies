@@ -100,7 +100,7 @@ function Hero() {
                                 </p>
                                 <div className="flex gap-4">
                                     <button onClick={() => setSelectedMovie(movie)} className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-colors">
-                                        ▶ Play Trailer
+                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg> Play Trailer
                                     </button>
                                     <button
                                         onClick={() => toggleMyList(movie)}
@@ -120,11 +120,11 @@ function Hero() {
 
 
             {/*Nav ke Buttons*/}
-            <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors">
-                ◀
+            <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/70 text-white rounded-full transition-all duration-300 backdrop-blur-sm border border-white/10 hover:border-white/30 hover:scale-110">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
             </button>
-            <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors">
-                ▶
+            <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/70 text-white rounded-full transition-all duration-300 backdrop-blur-sm border border-white/10 hover:border-white/30 hover:scale-110">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
             </button>
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
                 {movies.map((_, index) => (

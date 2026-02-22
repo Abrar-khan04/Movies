@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchMovies, searchTVShows, getImageUrl } from "../services/tmds";
-import Logo from "../assets/play.png";
 import { Link } from "react-router-dom";
 
 
@@ -80,9 +79,10 @@ function Header() {
             <nav aria-label="global" className="flex items-center justify-between p-6 lg:px-8">
                 {/*Logo*/}
                 <div className="flex lg:flex-1">
-                    <Link to="/" className="-m-2 p-2">
+                    <Link to="/" className="-m-2 p-2 flex items-center gap-2">
                         <span className="sr-only">Streamlio</span>
-                        <img src={Logo} alt="Streamlio Logo" className="h-10 w-auto" />
+                        <svg className="w-9 h-9 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" /></svg>
+                        <span className="text-white font-bold text-xl tracking-wide"></span>
                     </Link>
                 </div>
                 <div className="flex gap-x-12">
