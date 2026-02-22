@@ -47,7 +47,7 @@ export const getUpcomingMovies = async () => {
 // Fetch now playing movies
 export const getNowPlayingMovies = async () => {
     const response = await fetch(
-        `${BASE_URL}/movie/now_playing?api_key=${API_KEY}`
+        `${BASE_URL}/now_playing?api_key=${API_KEY}`
     );
     const data = await response.json();
     return data.results;
@@ -70,6 +70,15 @@ export const searchMovies = async (query) => {
     const data = await response.json();
     return data.results;
 };
+//Search TV shows
+export const searchTVShows = async (query) => {
+    const response = await fetch(
+        `${BASE_URL}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(query)}`
+    );
+    const data = await response.json();
+    return data.results;
+};
+
 
 // Fetch TV shows (bonus)
 export const getTrendingTVShows = async () => {
@@ -115,6 +124,33 @@ export const getSimilarMovies = async (movieId) => {
 export const discoverMovies = async (page = 1) => {
     const response = await fetch(
         `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=primary_release_date.desc&page=${page}&vote_count.gte=50`
+    );
+    const data = await response.json();
+    return data; // Important: Return the full 'data' object
+};
+
+
+export const discoverTVShows = async (page = 1) => {
+    const response = await fetch(
+        `${BASE_URL}/discover/tv?api_key=${API_KEY}&sort_by=first_air_date.desc&page=${page}&vote_count.gte=50`
+    );
+    const data = await response.json();
+    return data;
+};
+
+// Fetch TV show details by ID
+export const getTVShowDetails = async (tvId) => {
+    const response = await fetch(
+        `${BASE_URL}/tv/${tvId}?api_key=${API_KEY}&append_to_response=videos,credits`
+    );
+    const data = await response.json();
+    return data;
+};
+
+// Fetch similar TV shows
+export const getSimilarTVShows = async (tvId) => {
+    const response = await fetch(
+        `${BASE_URL}/tv/${tvId}/similar?api_key=${API_KEY}`
     );
     const data = await response.json();
     return data.results;

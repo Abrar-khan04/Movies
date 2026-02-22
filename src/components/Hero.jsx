@@ -10,6 +10,7 @@ function Hero() {
     const [searchResults, setSearchResults] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
+    const [listUpdate, setListUpdate] = useState(0);
 
     // Fetch movies on mount
     useEffect(() => {
@@ -35,8 +36,28 @@ function Hero() {
         return () => clearInterval(timer);
     }, [movies.length]);
 
-    //search ku sambhalna 
+    const isInMyList = (movieId) => {
+        const saved = JSON.parse(localStorage.getItem("myList")) || [];
+        return saved.some((item) => item.id === movieId && item.media_type === "movie");
+    };
 
+    const toggleMyList = (movie) => {
+        const saved = JSON.parse(localStorage.getItem("myList")) || [];
+        if (isInMyList(movie.id)) {
+            const updated = saved.filter((item) => !(item.id === movie.id && item.media_type === "movie"));
+            localStorage.setItem("myList", JSON.stringify(updated));
+        } else {
+            saved.push({
+                id: movie.id,
+                title: movie.title,
+                poster_path: movie.poster_path,
+                release_date: movie.release_date,
+                media_type: "movie",
+            });
+            localStorage.setItem("myList", JSON.stringify(saved));
+        }
+        setListUpdate((prev) => prev + 1);
+    };
 
     const goToSlide = (index) => setCurrentSlide(index);
     const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + movies.length) % movies.length);
@@ -60,8 +81,8 @@ function Hero() {
                             alt={movie.title}
                             className="absolute inset-0 w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-                        <div className="absolute inset-0 flex items-center px-12 lg:px-24">
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 flex items-center px-12 lg:px-24 relative z-10">
                             <div className="max-w-2xl">
                                 <h1 className="text-5xl lg:text-7xl font-bold text-white mb-4">
                                     {movie.title}
@@ -81,8 +102,14 @@ function Hero() {
                                     <button onClick={() => setSelectedMovie(movie)} className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-colors">
                                         ▶ Play Trailer
                                     </button>
-                                    <button className="px-8 py-3 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-lg backdrop-blur-sm transition-colors">
-                                        + My List
+                                    <button
+                                        onClick={() => toggleMyList(movie)}
+                                        className={`px-8 py-3 font-semibold rounded-lg backdrop-blur-sm transition-colors ${isInMyList(movie.id)
+                                            ? "bg-green-600 hover:bg-green-700 text-white"
+                                            : "bg-white/20 hover:bg-white/30 text-white"
+                                            }`}
+                                    >
+                                        {isInMyList(movie.id) ? "✓ In My List" : "+ My List"}
                                     </button>
                                 </div>
                             </div>

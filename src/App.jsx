@@ -4,9 +4,12 @@ import Hero from "./components/Hero";
 import Rec from "./components/Rec";
 import Show from "./components/Show";
 import MovieDetails from "./pages/MovieDetails";
-import Movies from "./pages/Movies";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AIChat from "./components/AIChat";
+import Movies from "./pages/Movies";
+import TVShows from "./pages/TVShows";
+import TVShowDetails from "./pages/TVShowDetails";
+import MyList from "./pages/MyList";
 
 function HomePage() {
   return (
@@ -26,6 +29,9 @@ function App() {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/movies" element={<Movies />} />
+        <Route path="/tv-shows" element={<TVShows />} />
+        <Route path="/tv/:id" element={<TVShowDetails />} />
+        <Route path="/my-list" element={<MyList />} />
       </Routes>
       <AIChat />
     </BrowserRouter>

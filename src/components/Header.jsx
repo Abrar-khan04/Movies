@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { searchMovies, getImageUrl } from "../services/tmds";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { searchMovies, searchTVShows, getImageUrl } from "../services/tmds";
 import Logo from "../assets/play.png";
+import { Link } from "react-router-dom";
+
 
 const navigation = [
+
     { name: "Home", href: '/' },
     { name: "Movies", href: '/movies' },
     { name: "TV Shows", href: '/tv-shows' },
@@ -15,19 +18,47 @@ function Header() {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
+    const debounceTimer = useRef(null);
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        if (!searchQuery.trim()) return;
-
-        setIsSearching(true);
-        try {
-            const results = await searchMovies(searchQuery);
-            setSearchResults(results.slice(0, 5));
-        } catch (error) {
-            console.error("Search Error:", error);
+    // Live suggestions as you type
+    useEffect(() => {
+        if (!searchQuery.trim()) {
+            setSearchResults([]);
+            return;
         }
-        setIsSearching(false);
+
+        // Debounce: wait 400ms after user stops typing before searching
+        clearTimeout(debounceTimer.current);
+        debounceTimer.current = setTimeout(async () => {
+            setIsSearching(true);
+            try {
+                const [movieResults, tvResults] = await Promise.all([
+                    searchMovies(searchQuery),
+                    searchTVShows(searchQuery),
+                ]);
+
+                const taggedMovies = movieResults.slice(0, 3).map((item) => ({
+                    ...item,
+                    media_type: "movie",
+                }));
+                const taggedTV = tvResults.slice(0, 3).map((item) => ({
+                    ...item,
+                    media_type: "tv",
+                }));
+
+                setSearchResults([...taggedMovies, ...taggedTV]);
+            } catch (error) {
+                console.error("Search Error:", error);
+            }
+            setIsSearching(false);
+        }, 400);
+
+        return () => clearTimeout(debounceTimer.current);
+    }, [searchQuery]);
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        // Already handled by useEffect live search
     };
 
     const clearSearch = () => {
@@ -35,8 +66,12 @@ function Header() {
         setSearchResults([]);
     };
 
-    const handleMovieClick = (movieId) => {
-        navigate(`/movie/${movieId}`);
+    const handleResultClick = (item) => {
+        if (item.media_type === "tv") {
+            navigate(`/tv/${item.id}`);
+        } else {
+            navigate(`/movie/${item.id}`);
+        }
         clearSearch();
     };
 
@@ -69,7 +104,7 @@ function Header() {
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search movies..."
+                            placeholder="Search movies & TV shows..."
                             className="w-48 lg:w-64 px-4 py-2 pl-10 bg-gray-800/80 border border-gray-600 rounded-full text-white text-sm placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
                         />
                         <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,13 +120,16 @@ function Header() {
                     {/* Search Results Dropdown */}
                     {searchResults.length > 0 && (
                         <div className="absolute top-full mt-2 right-0 w-80 bg-gray-900/95 backdrop-blur-md rounded-lg border border-gray-700 overflow-hidden shadow-xl z-50">
-                            {searchResults.map((movie) => (
-                                <div key={movie.id} onClick={() => handleMovieClick(movie.id)} className="flex items-center gap-3 p-3 hover:bg-white/10 cursor-pointer transition-colors">
-                                    <img src={getImageUrl(movie.poster_path, "w500")} alt={movie.title} className="w-10 h-14 object-cover rounded" />
+                            {searchResults.map((item) => (
+                                <div key={`${item.media_type}-${item.id}`} onClick={() => handleResultClick(item)} className="flex items-center gap-3 p-3 hover:bg-white/10 cursor-pointer transition-colors">
+                                    <img src={getImageUrl(item.poster_path, "w500")} alt={item.title || item.name} className="w-10 h-14 object-cover rounded" />
                                     <div className="flex-1 min-w-0">
-                                        <h3 className="text-white font-semibold text-sm truncate">{movie.title}</h3>
+                                        <h3 className="text-white font-semibold text-sm truncate">{item.title || item.name}</h3>
                                         <p className="text-gray-400 text-xs">
-                                            {movie.release_date?.split("-")[0]} • ⭐ {movie.vote_average?.toFixed(1)}
+                                            {(item.release_date || item.first_air_date)?.split("-")[0]} • ⭐ {item.vote_average?.toFixed(1)}
+                                            <span className="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-gray-700">
+                                                {item.media_type === "movie" ? "Movie" : "TV"}
+                                            </span>
                                         </p>
                                     </div>
                                 </div>

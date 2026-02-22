@@ -19,6 +19,7 @@ function Rec() {
     const [loading, setLoading] = useState(true);
     const [selectedGenre, setSelectedGenre] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
+    const [listUpdate, setListUpdate] = useState(0);
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -37,6 +38,30 @@ function Rec() {
     const filterMovies = selectedGenre
         ? movies.filter((movie) => movie.genre_ids?.includes(selectedGenre))
         : movies;
+
+    const isInMyList = (movieId) => {
+        const saved = JSON.parse(localStorage.getItem("myList")) || [];
+        return saved.some((item) => item.id === movieId && item.media_type === "movie");
+    };
+
+    const toggleMyList = (e, movie) => {
+        e.stopPropagation();
+        const saved = JSON.parse(localStorage.getItem("myList")) || [];
+        if (isInMyList(movie.id)) {
+            const updated = saved.filter((item) => !(item.id === movie.id && item.media_type === "movie"));
+            localStorage.setItem("myList", JSON.stringify(updated));
+        } else {
+            saved.push({
+                id: movie.id,
+                title: movie.title,
+                poster_path: movie.poster_path,
+                release_date: movie.release_date,
+                media_type: "movie",
+            });
+            localStorage.setItem("myList", JSON.stringify(saved));
+        }
+        setListUpdate((prev) => prev + 1);
+    };
 
     if (loading) {
         return (
@@ -70,12 +95,21 @@ function Rec() {
                         <div className="relative overflow-hidden rounded-lg shadow-lg">
                             <img src={getImageUrl(movie.poster_path, "w500")} alt={movie.title} className="w-full h-auto aspect-[2/3] object-cover " />
                             {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2">
                                 <button
                                     onClick={() => setSelectedMovie(movie)}
                                     className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors"
                                 >
                                     ▶ Watch Now
+                                </button>
+                                <button
+                                    onClick={(e) => toggleMyList(e, movie)}
+                                    className={`px-4 py-2 font-semibold rounded-lg transition-colors text-sm ${isInMyList(movie.id)
+                                            ? "bg-green-600 hover:bg-green-700 text-white"
+                                            : "bg-white/20 hover:bg-white/30 text-white border border-white/30"
+                                        }`}
+                                >
+                                    {isInMyList(movie.id) ? "✓ In My List" : "+ My List"}
                                 </button>
                             </div>
                             {/*Rating Badge hein ***/}

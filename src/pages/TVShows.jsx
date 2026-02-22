@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { discoverMovies, getImageUrl } from "../services/tmds";
-import { useNavigate } from "react-router-dom";
+import { discoverTVShows, getImageUrl } from "../services/tmds";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
 
-function Movies() {
 
-    const [movies, setMovies] = useState([]);
+function TVShows() {
+    const [shows, setShows] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchMovies = async () => {
+        const fetchShows = async () => {
             setLoading(true);
             try {
-                const data = await discoverMovies(currentPage);
-                setMovies(data.results);
+                const data = await discoverTVShows(currentPage);
+                setShows(data.results);
                 setTotalPages(Math.min(data.total_pages, 500));
             } catch (error) {
-                console.error("Error Fetching movies", error)
+                console.error("Error Fetching TV Shows", error);
             } finally {
                 setLoading(false);
             }
         }
-        fetchMovies();
+        fetchShows();
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, [currentPage]);
 
@@ -52,8 +52,8 @@ function Movies() {
         <div className="min-h-screen bg-gray-900 pt-24 pb-12 px-6 lg:px-12 text-white">
             <Header />
             <div className="mb-8">
-                <h1 className="text-3xl font-bold mb-2"> Latest movies </h1>
-                <p className="text-gray-400">Browse the most recent releases from around the world.</p>
+                <h1 className="text-3xl font-bold mb-2">Latest TV Shows</h1>
+                <p className="text-gray-400">Browse the most recent TV shows from around the world.</p>
             </div>
             {loading ? (
                 <div className="flex justify-center py-20">
@@ -62,15 +62,15 @@ function Movies() {
             ) : (
                 <>
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                        {movies.map((movie) => (
-                            <div key={movie.id} onClick={() => navigate(`/movie/${movie.id}`)} className="bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-red-500 transition-all">
-                                <img src={getImageUrl(movie.poster_path, "w500") || "https://via.placeholder.com/500x750?text=No+Poster"} alt={movie.title} className="w-full aspect-[2/3] object-cover" />
+                        {shows.map((show) => (
+                            <div key={show.id} onClick={() => navigate(`/tv/${show.id}`)} className="bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-red-500 transition-all">
+                                <img src={getImageUrl(show.poster_path, "w500") || "https://via.placeholder.com/500x750?text=No+Poster"} alt={show.name} className="w-full aspect-[2/3] object-cover" />
                                 <div className="p-3">
                                     <h3 className="font-semibold truncate">
-                                        {movie.title}
+                                        {show.name}
                                     </h3>
                                     <p className="text-sm text-gray-400">
-                                        {movie.release_date?.split("-")[0]}
+                                        {show.first_air_date?.split("-")[0]}
                                     </p>
                                 </div>
                             </div>
@@ -120,4 +120,4 @@ function Movies() {
     );
 }
 
-export default Movies;
+export default TVShows;
