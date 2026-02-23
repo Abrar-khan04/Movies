@@ -79,16 +79,16 @@ function MovieDetails() {
     return (
         <div className="min-h-screen bg-gray-900">
             <Header />
-            <div className="relative h-[70vh] w-full">
+            <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full">
                 <img src={getImageUrl(movie.backdrop_path, "original")} alt={movie.title} className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent pointer-events-none" />
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-transparent pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16 relative z-10">
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 lg:p-16 relative z-10">
                     <div className="max-w-4xl">
-                        <h1 className="text-4xl lg:text-6xl font-bold text-white mb-4">
+                        <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold text-white mb-2 sm:mb-4">
                             {movie.title}
                         </h1>
-                        <div className="flex items-center gap-4 mb-4">
+                        <div className="flex items-center gap-2 sm:gap-4 mb-2 sm:mb-4 text-sm sm:text-base">
                             <span className="text-yellow-400 font-semibold ">
                                 ⭐ {movie.vote_average?.toFixed(1)}
                             </span>
@@ -106,16 +106,16 @@ function MovieDetails() {
                                 </span>
                             ))}
                         </div>
-                        <p className="text-lg text-gray-300 mb-6 max-w-2xl line-clamp-4">
+                        <p className="text-sm sm:text-lg text-gray-300 mb-4 sm:mb-6 max-w-2xl line-clamp-2 sm:line-clamp-4">
                             {movie.overview}
                         </p>
-                        <div className="flex items-center gap-4">
-                            <button className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-colors" onClick={() => setSelectedMovie(movie)}>
+                        <div className="flex items-center gap-2 sm:gap-4">
+                            <button className="px-4 py-2 sm:px-8 sm:py-3 bg-red-600 hover:bg-red-700 text-white text-sm sm:text-base font-semibold rounded-lg flex items-center gap-2 transition-colors" onClick={() => setSelectedMovie(movie)}>
                                 Play Trailer
                             </button>
                             <button
                                 onClick={toggleMyList}
-                                className={`px-8 py-3 font-semibold rounded-lg flex items-center gap-2 transition-colors ${isInMyList()
+                                className={`px-4 py-2 sm:px-8 sm:py-3 text-sm sm:text-base font-semibold rounded-lg flex items-center gap-2 transition-colors ${isInMyList()
                                     ? "bg-green-600 hover:bg-green-700 text-white"
                                     : "bg-white/10 hover:bg-white/20 text-white border border-white/30"
                                     }`}
@@ -128,11 +128,11 @@ function MovieDetails() {
             </div>
             {/*Similar Movies*/}
             {similarMovies.length > 0 && (
-                <div className="px-12 lg:px-20 pt-24 pb-16">
-                    <h2 className="text-2xl lg:text-3xl font-bold text-white mb-8">
+                <div className="px-4 sm:px-12 lg:px-20 pt-12 sm:pt-24 pb-8 sm:pb-16">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-4 sm:mb-8">
                         Similar Movies
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6">
                         {similarMovies.map((similarMovie) => (
                             <div key={similarMovie.id} onClick={() => navigate(`/movie/${similarMovie.id}`)} className="group cursor-pointer transition-transform duration-300 hover:scale-105">
                                 <div className="relative overflow-hidden rounded-lg shadow-lg">

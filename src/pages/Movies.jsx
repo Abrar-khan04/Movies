@@ -49,7 +49,7 @@ function Movies() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 pt-24 pb-12 px-6 lg:px-12 text-white">
+        <div className="min-h-screen bg-gray-900 pt-20 sm:pt-24 pb-8 sm:pb-12 px-4 sm:px-6 lg:px-12 text-white">
             <Header />
             <div className="mb-8">
                 <h1 className="text-3xl font-bold mb-2"> Latest movies </h1>
@@ -61,7 +61,7 @@ function Movies() {
                 </div>
             ) : (
                 <>
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6">
                         {movies.map((movie) => (
                             <div key={movie.id} onClick={() => navigate(`/movie/${movie.id}`)} className="bg-gray-800 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-red-500 transition-all">
                                 <img src={getImageUrl(movie.poster_path, "w500") || "https://via.placeholder.com/500x750?text=No+Poster"} alt={movie.title} className="w-full aspect-[2/3] object-cover" />

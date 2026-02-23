@@ -82,12 +82,12 @@ function Hero() {
                             className="absolute inset-0 w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent pointer-events-none" />
-                        <div className="absolute inset-0 flex items-center px-12 lg:px-24 z-10">
+                        <div className="absolute inset-0 flex items-center px-4 sm:px-8 md:px-12 lg:px-24 z-10">
                             <div className="max-w-2xl">
-                                <h1 className="text-5xl lg:text-7xl font-bold text-white mb-4">
+                                <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-2 sm:mb-4">
                                     {movie.title}
                                 </h1>
-                                <div className="flex items-center gap-4 mb-4">
+                                <div className="flex items-center gap-2 sm:gap-4 mb-2 sm:mb-4 text-sm sm:text-base">
                                     <span className="text-yellow-400 font-semibold">
                                         ⭐ {movie.vote_average?.toFixed(1)}
                                     </span>
@@ -95,16 +95,16 @@ function Hero() {
                                         {movie.release_date?.split("-")[0]}
                                     </span>
                                 </div>
-                                <p className="text-lg lg:text-xl text-gray-300 mb-8 line-clamp-3">
+                                <p className="text-sm sm:text-lg lg:text-xl text-gray-300 mb-4 sm:mb-8 line-clamp-2 sm:line-clamp-3">
                                     {movie.overview}
                                 </p>
-                                <div className="flex gap-4">
-                                    <button onClick={() => setSelectedMovie(movie)} className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-colors">
-                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg> Play Trailer
+                                <div className="flex gap-2 sm:gap-4">
+                                    <button onClick={() => setSelectedMovie(movie)} className="px-4 py-2 sm:px-6 sm:py-3 bg-red-600 hover:bg-red-700 text-white text-sm sm:text-base font-semibold rounded-lg flex items-center gap-2 transition-colors">
+                                        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg> Play Trailer
                                     </button>
                                     <button
                                         onClick={() => toggleMyList(movie)}
-                                        className={`px-8 py-3 font-semibold rounded-lg backdrop-blur-sm transition-colors ${isInMyList(movie.id)
+                                        className={`px-4 py-2 sm:px-8 sm:py-3 text-sm sm:text-base font-semibold rounded-lg backdrop-blur-sm transition-colors ${isInMyList(movie.id)
                                             ? "bg-green-600 hover:bg-green-700 text-white"
                                             : "bg-white/20 hover:bg-white/30 text-white"
                                             }`}
@@ -120,15 +120,15 @@ function Hero() {
 
 
             {/*Nav ke Buttons*/}
-            <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/70 text-white rounded-full transition-all duration-300 backdrop-blur-sm border border-white/10 hover:border-white/30 hover:scale-110">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            <button onClick={prevSlide} className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-black/40 hover:bg-black/70 text-white rounded-full transition-all duration-300 backdrop-blur-sm border border-white/10 hover:border-white/30 hover:scale-110">
+                <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
             </button>
-            <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-black/70 text-white rounded-full transition-all duration-300 backdrop-blur-sm border border-white/10 hover:border-white/30 hover:scale-110">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            <button onClick={nextSlide} className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-black/40 hover:bg-black/70 text-white rounded-full transition-all duration-300 backdrop-blur-sm border border-white/10 hover:border-white/30 hover:scale-110">
+                <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
             </button>
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
+            <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3">
                 {movies.map((_, index) => (
-                    <button key={index} onClick={() => goToSlide(index)} className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide ? "bg-red-600" : "bg-white/50 hover:bg-white/70"}`} />
+                    <button key={index} onClick={() => goToSlide(index)} className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${index === currentSlide ? "bg-red-600" : "bg-white/50 hover:bg-white/70"}`} />
                 ))}
             </div>
             {selectedMovie && (

@@ -21,7 +21,7 @@ function MyList() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 pt-24 pb-12 px-6 lg:px-12 text-white">
+        <div className="min-h-screen bg-gray-900 pt-20 sm:pt-24 pb-8 sm:pb-12 px-4 sm:px-6 lg:px-12 text-white">
             <Header />
             <div className="mb-8">
                 <h1 className="text-3xl font-bold mb-2">My List</h1>
@@ -34,7 +34,7 @@ function MyList() {
                     <p className="text-gray-600 text-sm">Add movies or TV shows from their details page.</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6">
                     {myList.map((item) => (
                         <div key={`${item.media_type}-${item.id}`} className="relative bg-gray-800 rounded-lg overflow-hidden group">
                             <div onClick={() => navigate(item.media_type === "tv" ? `/tv/${item.id}` : `/movie/${item.id}`)} className="cursor-pointer">
